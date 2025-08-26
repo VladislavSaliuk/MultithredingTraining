@@ -1,10 +1,10 @@
-package ex1;
+package ex1.runnable;
 
-public class MyThread extends Thread {
-
+public class MyRunnable implements Runnable {
+    @Override
     public void run() {
         for (int i = 0; i <= 10; i++) {
-            System.out.println(this.getName() + ": " + i);
+            System.out.println(Thread.currentThread().getName() + ": " + i);
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -12,5 +12,4 @@ public class MyThread extends Thread {
             }
         }
     }
-
 }

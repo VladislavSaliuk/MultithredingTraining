@@ -1,30 +1,40 @@
 package ex2;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Main {
     public static void main(String[] args) throws InterruptedException {
 
         Bank bank = new Bank();
 
-        Runnable runnableTask = () -> {
-            for(int i = 0; i < 10; i++) {
-                bank.topUpBalance(30L);
+        Runnable task1 = () -> {
+            try {
+                for (int i = 0; i < 10; i++) {
+                    bank.topUpBalance(100L);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         };
 
-        Thread thread1 = new Thread(runnableTask);
-        Thread thread2 = new Thread(runnableTask);
-        Thread thread3 = new Thread(runnableTask);
+        Runnable task2 = () -> {
+            try {
+                for (int i = 0; i < 10; i++) {
+                    bank.topUpBalance(200L);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        };
 
-        thread1.start();
-        thread2.start();
-        thread3.start();
+        Thread t1 = new Thread(task1);
+        t1.setName("Thread-1");
+        Thread t2 = new Thread(task2);
+        t2.setName("Thread-2");
 
-        thread1.join();
-        thread2.join();
-        thread3.join();
+        t1.start();
+        t2.start();
+
+        t1.join();
+        t2.join();
 
         System.out.println("Current balance: " + bank.getCurrentBalance());
 

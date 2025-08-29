@@ -7,12 +7,13 @@ public class Main {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
 
         BlockingQueue<Integer> queue = new BlockingQueue<>(1);
+        queue.put(16);
 
         Runnable put = new Runnable() {
             @Override
             public void run() {
                 try {
-                    queue.put(3);
+                    queue.put(10);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -27,8 +28,8 @@ public class Main {
         };
 
         ExecutorService executor = Executors.newFixedThreadPool(5);
-        Future<Integer> queueValue = executor.submit(take);
         executor.submit(put);
+        Future<Integer> queueValue = executor.submit(take);
         System.out.println("Queue value: " + queueValue.get());
 
         executor.shutdown();

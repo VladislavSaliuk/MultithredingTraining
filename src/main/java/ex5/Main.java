@@ -16,7 +16,7 @@ public class Main {
 
         executorService.shutdown();
 
-        if (executorService.awaitTermination(10000, TimeUnit.MILLISECONDS)) {
+        if (!executorService.awaitTermination(10000, TimeUnit.MILLISECONDS)) {
             executorService.shutdownNow();
         }
 
